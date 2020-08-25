@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-	protected $fillable = [
-		'name',
-		'birthday',
-		'phone',
-		'email',
-	];
+    protected $fillable = [
+        'name',
+        'birthday',
+        'phone',
+        'email',
+    ];
 
     public function tasks()
     {
