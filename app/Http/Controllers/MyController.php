@@ -9,13 +9,13 @@ class MyController extends Controller
 {
     public function home()
     {
-    	return redirect('tasks');
+        return redirect('tasks');
     }
 
     public function changeLanguage($lang)
     {
-    	Session::put('lang', $lang);
-    	return redirect()->back();
+        Session::put('lang', $lang);
+        return redirect()->back();
     }
 }
 
