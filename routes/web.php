@@ -16,3 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('tasks', 'TaskController')->only([
+    'index', 'store', 'destroy'
+]);
+
+Route::resource('employees', 'EmployeeController')->only([
+    'index', 'store', 'destroy'
+]);
