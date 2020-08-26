@@ -5,19 +5,19 @@
         <div class="col-sm-offset-2 col-sm-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <strong>New Employee</strong>
+                    <strong>{{ trans('message.new_employee') }}</strong>
                 </div>
                 <div class="panel-body">
                     <!-- Display Validation Errors -->
                     @include('common.errors')
 
                     <!-- New Employee Form -->
-                    <form action="{{ url('employees') }}" method="POST" class="form-horizontal">
-                        {{ csrf_field() }}
+                    <form action="{{ route('employees.store') }}" method="POST" class="form-horizontal">
+                        @csrf
 
                         <!-- Employee Name -->
                         <div class="form-group">
-                            <label for="name" class="col-sm-3 control-label">Name</label>
+                            <label for="name" class="col-sm-3 control-label">{{ trans('message.name') }}</label>
 
                             <div class="col-sm-6">
                                 <input type="text" name="name" id="employee-name" class="form-control" placeholder="Employee Name">
@@ -26,7 +26,7 @@
 
                         <!-- Employee Birthday -->
                         <div class="form-group">
-                            <label for="birthday" class="col-sm-3 control-label">Birthday</label>
+                            <label for="birthday" class="col-sm-3 control-label">{{ trans('message.birthday') }}</label>
 
                             <div class="col-sm-6">
                                 <input type="date" name="birthday" id="employee-birthday" class="form-control" placeholder="Employee Birthday">
@@ -35,7 +35,7 @@
 
                         <!-- Employee Phone -->
                         <div class="form-group">
-                            <label for="phone" class="col-sm-3 control-label">Phone</label>
+                            <label for="phone" class="col-sm-3 control-label">{{ trans('message.phone') }}</label>
 
                             <div class="col-sm-6">
                                 <input type="text" name="phone" id="employee-phone" class="form-control" placeholder="Employee Phone">
@@ -44,7 +44,7 @@
 
                         <!-- Employee Email -->
                         <div class="form-group">
-                            <label for="email" class="col-sm-3 control-label">Email</label>
+                            <label for="email" class="col-sm-3 control-label">{{ trans('message.email') }}</label>
 
                             <div class="col-sm-6">
                                 <input type="email" name="email" id="employee-email" class="form-control" placeholder="Employee Email">
@@ -55,7 +55,7 @@
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-6">
                                 <button type="submit" class="btn btn-default">
-                                    <i class="fa fa-plus"></i> Add Employee
+                                    <i class="fa fa-plus"></i> {{ trans('message.add_employee') }}
                                 </button>
                             </div>
                         </div>
@@ -64,10 +64,10 @@
             </div>
 
             <!-- Current Tasks -->
-            @if (count($employees) > 0)
+            @if (count($employees) > config('number.no_employees'))
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <strong>Current Employees</strong>
+                        <strong>{{ trans('message.current_employees') }}</strong>
                     </div>
 
                     <div class="panel-body">
@@ -75,7 +75,7 @@
 
                             <!-- Table Headings -->
                             <thead>
-                                <th>Employee</th>
+                                <th>{{ trans('message.employee') }}</th>
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
                             </thead>
@@ -92,7 +92,7 @@
                                         <!-- Button trigger modal -->
                                         <td>
                                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#employeeModal{{ $employee->id }}">
-                                            View Tasks
+                                            {{ trans('message.view_tasks') }}
                                             </button>
 
                                             <!-- Modal -->
@@ -100,19 +100,19 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel"><strong>Task</strong> for Employee: {{ $employee->name }}</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel"><strong>{{ trans('message.task') }}</strong> {{ trans('message.for_employee') }}: {{ $employee->name }}</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body" style="overflow-x: auto">
-                                                            @if (count($employee->tasks) < 1)
-                                                                No task.
+                                                            @if (count($employee->tasks) < config('number.min_tasks'))
+                                                                {{ trans('message.no_task') }}
                                                             @else
                                                                 <table class="table table-bordered">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th scope="col">Name</th>
+                                                                            <th scope="col">{{ trans('message.name') }}</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -126,7 +126,7 @@
                                                             @endif
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('message.close') }}</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -135,12 +135,12 @@
 
                                         <!-- Delete Button -->
                                         <td>
-                                            <form action="{{ url('employees/'.$employee->id) }}" method="POST">
-                                                {{ csrf_field() }}
-                                                {{ method_field('DELETE') }}
+                                            <form action="{{ route('employees.destroy', $employee->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
 
                                                 <button type="submit" class="btn btn-danger">
-                                                    <i class="fa fa-trash"></i> Delete
+                                                    <i class="fa fa-trash"></i> {{ trans('message.delete') }}
                                                 </button>
                                             </form>
                                         </td>

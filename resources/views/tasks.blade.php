@@ -5,19 +5,19 @@
         <div class="col-sm-offset-2 col-sm-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <strong>New Task</strong>
+                    <strong>{{ trans('message.new_task') }}</strong>
                 </div>
                 <div class="panel-body">
                     <!-- Display Validation Errors -->
                     @include('common.errors')
 
                     <!-- New Task Form -->
-                    <form action="{{ url('tasks') }}" method="POST" class="form-horizontal">
-                        {{ csrf_field() }}
+                    <form action="{{ route('tasks.store') }}" method="POST" class="form-horizontal">
+                        @csrf
 
                         <!-- Task Name -->
                         <div class="form-group">
-                            <label for="task" class="col-sm-3 control-label">Task</label>
+                            <label for="task" class="col-sm-3 control-label">{{ trans('message.task') }}</label>
 
                             <div class="col-sm-6">
                                 <input type="text" name="name" id="task-name" class="form-control" placeholder="Task Name">
@@ -28,7 +28,7 @@
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-6">
                                 <button type="submit" class="btn btn-default">
-                                    <i class="fa fa-plus"></i> Add Task
+                                    <i class="fa fa-plus"></i> {{ trans('message.add_task') }}
                                 </button>
                             </div>
                         </div>
@@ -37,10 +37,10 @@
             </div>
 
             <!-- Current Tasks -->
-            @if (count($tasks) > 0)
+            @if (count($tasks) > config('number.no_task'))
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <strong>Current Tasks</strong>
+                        <strong>{{ trans('message.current_tasks') }}</strong>
                     </div>
 
                     <div class="panel-body">
@@ -48,7 +48,7 @@
 
                             <!-- Table Headings -->
                             <thead>
-                                <th>Task</th>
+                                <th>{{ trans('message.task') }}</th>
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
                             </thead>
@@ -65,7 +65,7 @@
                                         <!-- Button trigger modal -->
                                         <td>
                                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#employeeModal{{ $task->id }}">
-                                            View Employees
+                                            {{ trans('message.view_employees') }}
                                             </button>
 
                                             <!-- Modal -->
@@ -73,22 +73,22 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel"><strong>Employee</strong> for Task #{{ $task->id }}</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel"><strong>{{ trans('message.employee') }}</strong> {{ trans('message.for_task') }} #{{ $task->id }}</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body" style="overflow-x: auto">
-                                                            @if (count($task->employees) < 1)
-                                                                No employee.
+                                                            @if (count($task->employees) < config('number.min_employees'))
+                                                                {{ trans('message.no_employee') }}
                                                             @else
                                                                 <table class="table table-bordered">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th scope="col">Name</th>
-                                                                            <th scope="col">Birthday</th>
-                                                                            <th scope="col">Phone</th>
-                                                                            <th scope="col">Email</th>
+                                                                            <th scope="col">{{ trans('message.name') }}</th>
+                                                                            <th scope="col">{{ trans('message.birthday') }}</th>
+                                                                            <th scope="col">{{ trans('message.phone') }}</th>
+                                                                            <th scope="col">{{ trans('message.email') }}</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -105,7 +105,7 @@
                                                             @endif
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('message.close') }}</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -114,12 +114,12 @@
 
                                         <!-- Delete Button -->
                                         <td>
-                                            <form action="{{ url('tasks/'.$task->id) }}" method="POST">
-                                                {{ csrf_field() }}
-                                                {{ method_field('DELETE') }}
+                                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
 
                                                 <button type="submit" class="btn btn-danger">
-                                                    <i class="fa fa-trash"></i> Delete
+                                                    <i class="fa fa-trash"></i> {{ trans('message.delete') }}
                                                 </button>
                                             </form  >
                                         </td>

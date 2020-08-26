@@ -1,7 +1,7 @@
-@if (count($errors) > 0)
+@if (count($errors) > config('number.no_errors'))
     <!-- Form Error List -->
     <div class="alert alert-danger">
-        <strong>Whoops! Something went wrong!</strong>
+        <strong>{{ trans('message.error') }}</strong>
         <br><br>
         <ul>
             @foreach ($errors->all() as $error)
