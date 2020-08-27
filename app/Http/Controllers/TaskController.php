@@ -17,7 +17,7 @@ class TaskController extends Controller
         $tasks = Task::orderBy('created_at', 'asc')->get();
 
         return view('tasks', [
-            'tasks' => $tasks
+            'tasks' => $tasks,
         ]);
     }
 

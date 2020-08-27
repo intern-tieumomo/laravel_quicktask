@@ -8,14 +8,11 @@
                     <strong>{{ trans('message.new_employee') }}</strong>
                 </div>
                 <div class="panel-body">
-                    <!-- Display Validation Errors -->
                     @include('common.errors')
 
-                    <!-- New Employee Form -->
                     <form action="{{ route('employees.store') }}" method="POST" class="form-horizontal">
                         @csrf
 
-                        <!-- Employee Name -->
                         <div class="form-group">
                             <label for="name" class="col-sm-3 control-label">{{ trans('message.name') }}</label>
 
@@ -24,7 +21,6 @@
                             </div>
                         </div>
 
-                        <!-- Employee Birthday -->
                         <div class="form-group">
                             <label for="birthday" class="col-sm-3 control-label">{{ trans('message.birthday') }}</label>
 
@@ -33,7 +29,6 @@
                             </div>
                         </div>
 
-                        <!-- Employee Phone -->
                         <div class="form-group">
                             <label for="phone" class="col-sm-3 control-label">{{ trans('message.phone') }}</label>
 
@@ -42,7 +37,6 @@
                             </div>
                         </div>
 
-                        <!-- Employee Email -->
                         <div class="form-group">
                             <label for="email" class="col-sm-3 control-label">{{ trans('message.email') }}</label>
 
@@ -51,7 +45,6 @@
                             </div>
                         </div>
 
-                        <!-- Add Employee Button -->
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-6">
                                 <button type="submit" class="btn btn-default">
@@ -63,7 +56,6 @@
                 </div>
             </div>
 
-            <!-- Current Tasks -->
             @if (count($employees) > config('number.no_employees'))
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -73,34 +65,31 @@
                     <div class="panel-body">
                         <table class="table table-striped task-table">
 
-                            <!-- Table Headings -->
                             <thead>
                                 <th>{{ trans('message.employee') }}</th>
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
                             </thead>
 
-                            <!-- Table Body -->
                             <tbody>
                                 @foreach ($employees as $employee)
                                     <tr>
-                                        <!-- Employee Name -->
                                         <td class="table-text">
                                             <div>{{ $employee->name }}</div>
                                         </td>
 
-                                        <!-- Button trigger modal -->
                                         <td>
                                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#employeeModal{{ $employee->id }}">
-                                            {{ trans('message.view_tasks') }}
+                                                {{ trans('message.view_tasks') }}
                                             </button>
 
-                                            <!-- Modal -->
                                             <div class="modal fade" id="employeeModal{{ $employee->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel"><strong>{{ trans('message.task') }}</strong> {{ trans('message.for_employee') }}: {{ $employee->name }}</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">
+                                                                <strong>{{ trans('message.task') }}</strong> {{ trans('message.for_employee') }}: {{ $employee->name }}
+                                                            </h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -133,7 +122,6 @@
                                             </div>
                                         </td>
 
-                                        <!-- Delete Button -->
                                         <td>
                                             <form action="{{ route('employees.destroy', $employee->id) }}" method="POST">
                                                 @csrf

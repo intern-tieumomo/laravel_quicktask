@@ -16,7 +16,7 @@ class EmployeeController extends Controller
         $employees = Employee::orderBy('created_at', 'asc')->get();
 
         return view('employees', [
-            'employees' => $employees
+            'employees' => $employees,
         ]);
     }
 

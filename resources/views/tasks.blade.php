@@ -8,14 +8,11 @@
                     <strong>{{ trans('message.new_task') }}</strong>
                 </div>
                 <div class="panel-body">
-                    <!-- Display Validation Errors -->
                     @include('common.errors')
 
-                    <!-- New Task Form -->
                     <form action="{{ route('tasks.store') }}" method="POST" class="form-horizontal">
                         @csrf
 
-                        <!-- Task Name -->
                         <div class="form-group">
                             <label for="task" class="col-sm-3 control-label">{{ trans('message.task') }}</label>
 
@@ -24,7 +21,6 @@
                             </div>
                         </div>
 
-                        <!-- Add Task Button -->
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-6">
                                 <button type="submit" class="btn btn-default">
@@ -36,7 +32,6 @@
                 </div>
             </div>
 
-            <!-- Current Tasks -->
             @if (count($tasks) > config('number.no_task'))
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -46,34 +41,31 @@
                     <div class="panel-body">
                         <table class="table table-striped task-table">
 
-                            <!-- Table Headings -->
                             <thead>
                                 <th>{{ trans('message.task') }}</th>
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
                             </thead>
 
-                            <!-- Table Body -->
                             <tbody>
                                 @foreach ($tasks as $task)
                                     <tr>
-                                        <!-- Task Name -->
                                         <td class="table-text">
                                             <div>{{ $task->name }}</div>
                                         </td>
 
-                                        <!-- Button trigger modal -->
                                         <td>
                                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#employeeModal{{ $task->id }}">
-                                            {{ trans('message.view_employees') }}
+                                                {{ trans('message.view_employees') }}
                                             </button>
 
-                                            <!-- Modal -->
                                             <div class="modal fade" id="employeeModal{{ $task->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel"><strong>{{ trans('message.employee') }}</strong> {{ trans('message.for_task') }} #{{ $task->id }}</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">
+                                                                <strong>{{ trans('message.employee') }}</strong> {{ trans('message.for_task') }} #{{ $task->id }}
+                                                            </h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -112,7 +104,6 @@
                                             </div>
                                         </td>
 
-                                        <!-- Delete Button -->
                                         <td>
                                             <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">
                                                 @csrf
