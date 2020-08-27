@@ -28,4 +28,6 @@ return [
     'no_task'           => 'No task.',
     'no_employee'       => 'No employee.',
     'title'             => 'Laravel Quickstart - Basic',
+    'english'           => 'English',
+    'vietnamese'        => 'vietnamese',
 ];

@@ -27,4 +27,6 @@ return [
     'no_task'           => 'Không thực hiện task nào.',
     'no_employee'       => "Không có nhân viên nào thực hiện task.",
     'title'             => 'Laravel Quickstart - Basic',
+    'english'           => 'Tiếng Anh',
+    'vietnamese'        => 'Tiếng Việt',
 ];

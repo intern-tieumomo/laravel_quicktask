@@ -26,10 +26,10 @@
                         |
                     </a>
                     <a class="navbar-brand" href="{!! route('change-language', ['en']) !!}">
-                        English
+                        {{ trans('message.english') }}
                     </a>
                     <a class="navbar-brand" href="{!! route('change-language', ['vi']) !!}">
-                        Vietnam
+                        {{ trans('message.vietnamese') }}
                     </a>
                 </div>
             </div>
