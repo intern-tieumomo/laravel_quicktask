@@ -18,6 +18,7 @@ class Locale
     {
         $lang = Session::get('lang', config('app.locale'));
         config(['app.locale' => $lang]);
+        
         return $next($request);
     }
 }

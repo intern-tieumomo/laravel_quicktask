@@ -20,7 +20,7 @@
                             <label for="name" class="col-sm-3 control-label">{{ trans('message.name') }}</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="name" id="employee-name" class="form-control" placeholder="Employee Name">
+                                <input type="text" name="name" id="employee-name" class="form-control" placeholder="{{ trans('message.name') }}">
                             </div>
                         </div>
 
@@ -29,7 +29,7 @@
                             <label for="birthday" class="col-sm-3 control-label">{{ trans('message.birthday') }}</label>
 
                             <div class="col-sm-6">
-                                <input type="date" name="birthday" id="employee-birthday" class="form-control" placeholder="Employee Birthday">
+                                <input type="date" name="birthday" id="employee-birthday" class="form-control" placeholder="{{ trans('message.birthday') }}">
                             </div>
                         </div>
 
@@ -38,7 +38,7 @@
                             <label for="phone" class="col-sm-3 control-label">{{ trans('message.phone') }}</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="phone" id="employee-phone" class="form-control" placeholder="Employee Phone">
+                                <input type="text" name="phone" id="employee-phone" class="form-control" placeholder="{{ trans('message.phone') }}">
                             </div>
                         </div>
 
@@ -47,7 +47,7 @@
                             <label for="email" class="col-sm-3 control-label">{{ trans('message.email') }}</label>
 
                             <div class="col-sm-6">
-                                <input type="email" name="email" id="employee-email" class="form-control" placeholder="Employee Email">
+                                <input type="email" name="email" id="employee-email" class="form-control" placeholder="{{ trans('message.email') }}">
                             </div>
                         </div>
 

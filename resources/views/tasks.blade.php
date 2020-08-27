@@ -20,7 +20,7 @@
                             <label for="task" class="col-sm-3 control-label">{{ trans('message.task') }}</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="name" id="task-name" class="form-control" placeholder="Task Name">
+                                <input type="text" name="name" id="task-name" class="form-control" placeholder="{{ trans('message.name') }}">
                             </div>
                         </div>
 

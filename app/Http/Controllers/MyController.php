@@ -15,6 +15,7 @@ class MyController extends Controller
     public function changeLanguage($lang)
     {
         Session::put('lang', $lang);
+        
         return redirect()->back();
     }
 }

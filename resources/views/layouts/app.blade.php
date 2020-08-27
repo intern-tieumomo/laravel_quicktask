@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Laravel Quickstart - Basic</title>
+        <title>{{ trans('message.title') }}</title>
         <!-- Styles -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
         <!-- Fonts -->
@@ -13,13 +13,13 @@
             <div class="container">
                 <div class="navbar-header">
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/tasks') }}">
+                    <a class="navbar-brand" href="{{ route('tasks.index') }}">
                         {{ trans('message.tasks_list') }}
                     </a>
                     <a class="navbar-brand">
                         |
                     </a>
-                    <a class="navbar-brand" href="{{ url('/employees') }}">
+                    <a class="navbar-brand" href="{{ route('employees.index') }}">
                         {{ trans('message.employees_list') }}
                     </a>
                     <a class="navbar-brand">
