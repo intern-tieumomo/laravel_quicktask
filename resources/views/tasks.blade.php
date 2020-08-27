@@ -70,7 +70,7 @@
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
-                                                        <div class="modal-body" style="overflow-x: auto">
+                                                        <div class="modal-body">
                                                             @if (count($task->employees) < config('number.min_employees'))
                                                                 {{ trans('message.no_employee') }}
                                                             @else
