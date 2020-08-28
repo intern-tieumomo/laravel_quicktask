@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware('locale')->group(function () {
+	Route::get('change-language/{lang}', 'MyController@changeLanguage')->name('change-language');
+	Route::get('/', 'MyController@home');
+
+	Route::resource('tasks', 'TaskController')->only([
+	    'index', 'store', 'destroy'
+	]);
+
+	Route::resource('employees', 'EmployeeController')->only([
+	    'index', 'store', 'destroy'
+	]);
 });
