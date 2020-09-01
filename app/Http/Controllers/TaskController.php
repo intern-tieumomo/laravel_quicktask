@@ -41,8 +41,6 @@ class TaskController extends Controller
      */
     public function store(TaskRequest $request)
     {
-        $validator = $request->validated();
-
         $input = $request->all();
         $task = Task::create($input);
 
@@ -132,6 +130,5 @@ class TaskController extends Controller
         } catch (ModelNotFoundException $e) {
             return redirect()->route('tasks.index')->withErrors(trans('message.t_doesnt_exist'));
         }
-
     }
 }
