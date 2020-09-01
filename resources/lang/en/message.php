@@ -30,4 +30,8 @@ return [
     'title'             => 'Laravel Quickstart - Basic',
     'english'           => 'English',
     'vietnamese'        => 'vietnamese',
+    'e_exists'          => 'Employee exists',
+    'e_doesnt_exist'    => 'Employee ID doesn\'t exist',
+    't_exists'          => 'Task exists',
+    't_doesnt_exist'    => 'Task ID doesn\'t exist',
 ];

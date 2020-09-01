@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskRequest;
 use App\Models\Task;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -37,9 +39,12 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
-        //
+        $input = $request->all();
+        $task = Task::create($input);
+
+        return redirect()->route('tasks.index');
     }
 
     /**
@@ -84,6 +89,46 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            Task::findOrFail($id)->delete();
+
+            return redirect()->route('tasks.index');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('tasks.index')->withErrors(trans('message.t_doesnt_exist'));
+        }
+    }
+
+    public function removeEmployee($tId, $eId)
+    {
+        try {
+            $task = Task::findOrFail($tId);
+            $task->employees()->detach($eId);
+
+            return redirect()->route('tasks.index');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('tasks.index')->withErrors(trans('message.t_doesnt_exist'));
+        }
+    }
+
+    public function addEmployee(Request $request, $tId)
+    {
+        try {
+            $task = Task::findOrFail($tId);
+            $employee = Employee::find($request->input('employeeId'));
+            if ($employee !== null) {
+                $hasEmployee = $task->employees()->where('employee_id', $request->input('employeeId'))->exists();
+                if (!$hasEmployee) {
+                    $task->employees()->attach($request->input('employeeId'));
+
+                    return redirect()->route('tasks.index');           
+                } else {
+                    return redirect()->route('tasks.index')->withErrors(trans('message.e_exists'));
+                }
+            } else {
+                return redirect()->route('tasks.index')->withErrors(trans('message.e_doesnt_exist'));
+            }
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('tasks.index')->withErrors(trans('message.t_doesnt_exist'));
+        }
     }
 }
