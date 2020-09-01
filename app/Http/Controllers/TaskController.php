@@ -90,14 +90,14 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        Task::find($id)->delete();
+        Task::findOrFail($id)->delete();
 
         return redirect()->route('tasks.index');
     }
 
     public function removeEmployee($tId, $eId)
     {
-        $task = Task::find($tId);
+        $task = Task::findOrFail($tId);
         $task->employees()->detach($eId);
 
         return redirect()->route('tasks.index');
@@ -108,8 +108,8 @@ class TaskController extends Controller
         $task = Task::find($tId);
         $employee = Employee::find($request->input('employeeId'));
         if ($employee !== null) {
-            $hasE = $task->employees()->where('employee_id', $request->input('employeeId'))->exists();
-            if (!$hasE) {
+            $hasEmployee = $task->employees()->where('employee_id', $request->input('employeeId'))->exists();
+            if (!$hasEmployee) {
                 $task->employees()->attach($request->input('employeeId'));
 
                 return redirect()->route('tasks.index');           
