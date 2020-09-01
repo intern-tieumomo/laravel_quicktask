@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskRequest;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -37,23 +38,14 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
-        ]);
+        $validator = $request->validated();
 
-        if ($validator->fails()) {
-            return redirect('/tasks')
-                ->withInput()
-                ->withErrors($validator);
-        }
+        $input = $request->all();
+        $task = Task::create($input);
 
-        $task = new Task;
-        $task->name = $request->input('name');
-        $task->save();
-
-        return redirect('/tasks');
+        return redirect()->route('tasks.index');
     }
 
     /**
@@ -100,7 +92,7 @@ class TaskController extends Controller
     {
         Task::find($id)->delete();
 
-        return redirect('/tasks');
+        return redirect()->route('tasks.index');
     }
 
     public function removeEmployee($tId, $eId)
@@ -108,24 +100,24 @@ class TaskController extends Controller
         $task = Task::find($tId);
         $task->employees()->detach($eId);
 
-        return redirect('/tasks');
+        return redirect()->route('tasks.index');
     }
 
     public function addEmployee(Request $request, $tId)
     {
         $task = Task::find($tId);
-        $employee = Employee::find($request->input('e-id'));
+        $employee = Employee::find($request->input('employeeId'));
         if ($employee !== null) {
-            $hasE = $task->employees()->where('employee_id', $request->input('e-id'))->exists();
+            $hasE = $task->employees()->where('employee_id', $request->input('employeeId'))->exists();
             if (!$hasE) {
-                $task->employees()->attach($request->input('e-id'));
+                $task->employees()->attach($request->input('employeeId'));
 
-                return redirect('/tasks');           
+                return redirect()->route('tasks.index');           
             } else {
-                return redirect('/tasks')->withErrors(trans('message.e_exists'));
+                return redirect()->route('tasks.index')->withErrors(trans('message.e_exists'));
             }
         } else {
-            return redirect('/tasks')->withErrors(trans('message.e_doesnt_exist'));
+            return redirect()->route('tasks.index')->withErrors(trans('message.e_doesnt_exist'));
         }
 
     }

@@ -136,7 +136,7 @@
                                                                     <label for="e" class="col-sm-3 control-label">ID</label>
 
                                                                     <div class="col-sm-6">
-                                                                        <input type="text" name="e-id" id="e-id" class="form-control" placeholder="ID">
+                                                                        <input type="text" name="employeeId" id="e-id" class="form-control" placeholder="ID">
                                                                     </div>
                                                                 </div>
 

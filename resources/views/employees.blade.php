@@ -154,7 +154,7 @@
                                                                     <label for="e" class="col-sm-3 control-label">ID</label>
 
                                                                     <div class="col-sm-6">
-                                                                        <input type="text" name="t-id" id="t-id" class="form-control" placeholder="ID">
+                                                                        <input type="text" name="taskId" id="t-id" class="form-control" placeholder="ID">
                                                                     </div>
                                                                 </div>
 
