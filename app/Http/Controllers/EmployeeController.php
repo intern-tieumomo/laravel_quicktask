@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EmployeeRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -89,34 +90,46 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        Employee::findOrFail($id)->delete();
+        try {
+            Employee::findOrFail($id)->delete();
 
-        return redirect()->route('employees.index');
+            return redirect()->route('employees.index');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('employees.index')->withErrors(trans('message.e_doesnt_exist'));
+        }
     }
 
     public function removeTask($eId, $tId)
     {
-        $employee = Employee::findOrFail($eId);
-        $employee->tasks()->detach($tId);
+        try {
+            $employee = Employee::findOrFail($eId);
+            $employee->tasks()->detach($tId);
 
-        return redirect()->route('employees.index');
+            return redirect()->route('employees.index');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('employees.index')->withErrors(trans('message.e_doesnt_exist'));
+        }
     }
 
     public function addTask(Request $request, $eId)
     {
-        $employee = Employee::find($eId);
-        $task = Task::find($request->input('taskId'));
-        if ($task !== null) {
-            $hasTask = $employee->tasks()->where('task_id', $request->input('taskId'))->exists();
-            if (!$hasTask) {
-                $employee->tasks()->attach($request->input('taskId'));
+        try {
+            $employee = Employee::findOrFail($eId);
+            $task = Task::find($request->input('taskId'));
+            if ($task !== null) {
+                $hasTask = $employee->tasks()->where('task_id', $request->input('taskId'))->exists();
+                if (!$hasTask) {
+                    $employee->tasks()->attach($request->input('taskId'));
 
-                return redirect()->route('employees.index');           
+                    return redirect()->route('employees.index');           
+                } else {
+                    return redirect()->route('employees.index')->withErrors(trans('message.t_exists'));
+                }
             } else {
-                return redirect()->route('employees.index')->withErrors(trans('message.t_exists'));
+                return redirect()->route('employees.index')->withErrors(trans('message.t_doesnt_exist'));
             }
-        } else {
-            return redirect()->route('employees.index')->withErrors(trans('message.t_doesnt_exist'));
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('employees.index')->withErrors(trans('message.e_doesnt_exist'));
         }
 
     }
