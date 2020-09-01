@@ -29,4 +29,8 @@ return [
     'title'             => 'Laravel Quickstart - Basic',
     'english'           => 'Tiếng Anh',
     'vietnamese'        => 'Tiếng Việt',
+    'e_exists'          => 'Nhân viên này đã được thêm vào task',
+    'e_doesnt_exist'    => 'ID nhân viên không tồn tại',
+    't_exists'          => 'Task này đã được giao cho nhân viên',
+    't_doesnt_exist'    => 'ID task không tồn tại',
 ];

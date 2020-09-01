@@ -38,7 +38,27 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name'     => 'required|max:255',
+            'birthday' => 'required',
+            'phone'    => 'required|max:10',
+            'email'    => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/employees')
+                ->withInput()
+                ->withErrors($validator);
+        }
+
+        $employee = new Employee;
+        $employee->name = $request->input('name');
+        $employee->birthday = $request->input('birthday');
+        $employee->phone = $request->input('phone');
+        $employee->email = $request->input('email');
+        $employee->save();
+
+        return redirect('/employees');
     }
 
     /**
@@ -83,6 +103,35 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Employee::find($id)->delete();
+
+        return redirect('/employees');
+    }
+
+    public function removeTask($eId, $tId)
+    {
+        $employee = Employee::find($eId);
+        $employee->tasks()->detach($tId);
+
+        return redirect('/employees');
+    }
+
+    public function addTask(Request $request, $eId)
+    {
+        $employee = Employee::find($eId);
+        $task = Task::find($request->input('t-id'));
+        if ($task !== null) {
+            $hasT = $employee->tasks()->where('task_id', $request->input('t-id'))->exists();
+            if (!$hasT) {
+                $employee->tasks()->attach($request->input('t-id'));
+
+                return redirect('/employees');           
+            } else {
+                return redirect('/employees')->withErrors(trans('message.t_exists'));
+            }
+        } else {
+            return redirect('/employees')->withErrors(trans('message.t_doesnt_exist'));
+        }
+
     }
 }

@@ -39,7 +39,21 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/tasks')
+                ->withInput()
+                ->withErrors($validator);
+        }
+
+        $task = new Task;
+        $task->name = $request->input('name');
+        $task->save();
+
+        return redirect('/tasks');
     }
 
     /**
@@ -84,6 +98,35 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Task::find($id)->delete();
+
+        return redirect('/tasks');
+    }
+
+    public function removeEmployee($tId, $eId)
+    {
+        $task = Task::find($tId);
+        $task->employees()->detach($eId);
+
+        return redirect('/tasks');
+    }
+
+    public function addEmployee(Request $request, $tId)
+    {
+        $task = Task::find($tId);
+        $employee = Employee::find($request->input('e-id'));
+        if ($employee !== null) {
+            $hasE = $task->employees()->where('employee_id', $request->input('e-id'))->exists();
+            if (!$hasE) {
+                $task->employees()->attach($request->input('e-id'));
+
+                return redirect('/tasks');           
+            } else {
+                return redirect('/tasks')->withErrors(trans('message.e_exists'));
+            }
+        } else {
+            return redirect('/tasks')->withErrors(trans('message.e_doesnt_exist'));
+        }
+
     }
 }
